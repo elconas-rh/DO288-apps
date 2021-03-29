@@ -92,6 +92,7 @@ pipeline {
         }
 
         stage('Wait for deployment in DEV env') {
+		steps {
             //TODO: Watch deployment until pod is in 'Running' state
                 sh "oc get route ${APP_NAME} -n ${DEV_PROJECT} -o jsonpath='{ .spec.host }' --loglevel=4 > routehost"
 
@@ -106,7 +107,7 @@ pipeline {
                         echo "Deployment to Development env is complete. Access the API endpoint at the URL http://${routeHost}/movies."
                     }
 		}
-
+		}
         }
 
         stage('Promote to Staging Env') {
